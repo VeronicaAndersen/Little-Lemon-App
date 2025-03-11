@@ -9,6 +9,10 @@ import Typography from '@mui/material/Typography';
 export default function Specials() {
     return (
         <>
+        <div className='specials'>
+            <h1 className='section-title'>Specials</h1>
+            <button>Online menu</button>
+        </div>
             <div className='specials'>
                 <Card sx={{ maxWidth: 345 }}>
                     <CardMedia
@@ -17,7 +21,7 @@ export default function Specials() {
                         title="Greek salad"
                     />
                     <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
+                        <Typography gutterBottom variant="h5" component="div" className="card-title">
                             Greek Salad
                         </Typography>
                         <Typography variant="caption" color='warning' gutterBottom sx={{ display: 'block' }}>
@@ -38,7 +42,7 @@ export default function Specials() {
                         title="Pasta"
                     />
                     <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
+                        <Typography gutterBottom variant="h5" component="div" className="card-title">
                             Pasta
                         </Typography>
                         <Typography variant="caption" color='warning' gutterBottom sx={{ display: 'block' }}>
@@ -59,7 +63,7 @@ export default function Specials() {
                         title="green iguana"
                     />
                     <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
+                        <Typography gutterBottom variant="h5" component="div" className="card-title">
                             Bruchata
                         </Typography>
                         <Typography variant="caption" color='warning' gutterBottom sx={{ display: 'block' }}>

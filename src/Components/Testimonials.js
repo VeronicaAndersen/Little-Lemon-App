@@ -19,10 +19,11 @@ export default function Testimonials() {
 
     return (
         <>
+            <h1 className='section-title'>Testimonials</h1>
             <div className='testimonials'>
                 <Box className="testimonial">
-                    <h3>Rating</h3>
-                    <img src={"/Images/Pasta.jpg"} alt="userpic" width={"150px"}/>
+                    <h3 className="card-title">Rating</h3>
+                    <img src={"/Images/Pasta.jpg"} alt="userpic" width={"150px"} />
                     <Rating
                         name="text-feedback"
                         value="5"
@@ -30,11 +31,11 @@ export default function Testimonials() {
                         precision={0.5}
                         emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
                     />
-                    <Box sx={{ ml: 2 }}>{labels["5"]}</Box>
+                    <Box sx={{ ml: 2 }} className="paragraph">{labels["5"]}</Box>
                 </Box>
                 <Box className="testimonial">
-                    <h3>Rating</h3>
-                    <img src={"/Images/Pasta.jpg"} alt="userpic" width={"150px"}/>
+                    <h3 className="card-title">Rating</h3>
+                    <img src={"/Images/Pasta.jpg"} alt="userpic" width={"150px"} />
                     <Rating
                         name="text-feedback"
                         value="3.5"
@@ -42,11 +43,11 @@ export default function Testimonials() {
                         precision={0.5}
                         emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
                     />
-                    <Box sx={{ ml: 2 }}>{labels["3.5"]}</Box>
+                    <Box sx={{ ml: 2 }} className="paragraph">{labels["3.5"]}</Box>
                 </Box>
                 <Box className="testimonial">
-                    <h3>Rating</h3>
-                    <img src={"/Images/Pasta.jpg"} alt="userpic" width={"150px"}/>
+                    <h3 className="card-title">Rating</h3>
+                    <img src={"/Images/Pasta.jpg"} alt="userpic" width={"150px"} />
                     <Rating
                         name="text-feedback"
                         value="4"
@@ -54,11 +55,11 @@ export default function Testimonials() {
                         precision={0.5}
                         emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
                     />
-                    <Box sx={{ ml: 2 }}>{labels["4"]}</Box>
+                    <Box sx={{ ml: 2 }} className="paragraph">{labels["4"]}</Box>
                 </Box>
                 <Box className="testimonial">
-                    <h3>Rating</h3>
-                    <img src={"/Images/Pasta.jpg"} alt="userpic" width={"150px"}/>
+                    <h3 className="card-title">Rating</h3>
+                    <img src={"/Images/Pasta.jpg"} alt="userpic" width={"150px"} />
                     <Rating
                         name="text-feedback"
                         value="4.5"
@@ -66,7 +67,7 @@ export default function Testimonials() {
                         precision={0.5}
                         emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
                     />
-                    <Box sx={{ ml: 2 }}>{labels["4.5"]}</Box>
+                    <Box sx={{ ml: 2 }} className="paragraph">{labels["4.5"]}</Box>
                 </Box>
             </div>
         </>

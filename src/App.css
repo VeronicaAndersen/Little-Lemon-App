@@ -1,6 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Markazi+Text:wght@400..700&display=swap');
+
 :root {
   --primary: #495E57;
   --secondary: #F4CE14;
+}
+
+p, .paragraph{
+  font-family: "Karla" !important;
+  font-weight: 500 !important;
+  font-size: 16pt !important;
+  color: var(--primary) !important;
+  line-height: 1.5 !important;
+  max-width: 65ch !important;
+}
+
+.display-title{
+  font-family: "Markazi Text";
+  font-size: 64pt;
+  font-weight: 500;
+  line-height: 0%;
+}
+
+.sub-title{
+  font-family: "Markazi Text";
+  font-size: 40pt;
+  font-weight: 400;
+  line-height: 0%;
+}
+
+.lead-text{
+  font-family: "Karla" !important;
+  font-size: 18pt !important;
+  font-weight: 500 !important;
+}
+
+.section-title{
+  text-transform: uppercase;
+  font-weight: 900;
+  font-size: 20pt;
+}
+
+.card-title{
+  font-family: "Karla" !important;
+  font-size: 18pt !important;
+  font-weight: 600 !important;
+}
+
+header {
+  height: 200px;
+  overflow: hidden;
+}
+
+header img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 nav {
@@ -48,6 +102,7 @@ button {
   display: flex;
   justify-content: space-around;
   background-color: #2a3934;
+  padding: 20px;
 }
 
 .hero, .about {
@@ -59,9 +114,7 @@ button {
 }
 
 .hero h1 {
-  font-weight: bold;
   color: var(--primary);
-  text-transform: uppercase;
 }
 
 .hero h3 {
