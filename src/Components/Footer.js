@@ -3,7 +3,7 @@ import React from 'react'
 export default function Footer() {
     return (
         <footer>
-            <img src='' alt='images'></img>
+            <img src={'/Images/Logo.jpg'} alt='images' width={"300px"}></img>
             <ul>
                 <li>Dorrmat Navigation</li>
                 <li><a href='TEST'>HOME</a></li>
