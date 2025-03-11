@@ -9,10 +9,10 @@ import Typography from '@mui/material/Typography';
 export default function Specials() {
     return (
         <>
-        <div className='specials'>
-            <h1 className='section-title'>Specials</h1>
-            <button>Online menu</button>
-        </div>
+            <div className='specials'>
+                <h1 className='section-title'>Specials</h1>
+                <button>Online menu</button>
+            </div>
             <div className='specials'>
                 <Card sx={{ maxWidth: 345 }}>
                     <CardMedia
