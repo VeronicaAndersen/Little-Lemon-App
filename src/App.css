@@ -1,30 +1,88 @@
-:root{
+:root {
   --primary: #495E57;
   --secondary: #F4CE14;
 }
+
 nav {
-  background-color: var(--primary);
-  height: 60px;
-  line-height: 60px;
+  background-color: #2a3934;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
 }
 
 nav ul {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+nav ul img {
+  height: 40px;
+  object-fit: contain;
 }
 
 nav ul li, footer ul li {
   list-style: none;
 }
 
-nav ul li a, footer ul li a, footer ul li  {
+nav ul li a, footer ul li a, footer ul li {
   text-decoration: none;
   color: #fff;
 }
 
-footer{
-  background-color: var(--primary);
+button {
+  background-color: var(--secondary);
+  height: 30px;
+  border-radius: 16px !important;
+  border: none;
+}
+
+.specials {
+  display: flex;
+  justify-content: space-around;
+  background-color: #2a3934;
+}
+
+.hero, .about {
+  display: flex;
+  border: #495E57 solid 2px;
+  border-radius: 16px;
+  margin: 20px 100px;
+  padding: 20px;
+}
+
+.hero h1 {
+  font-weight: bold;
+  color: var(--primary);
+  text-transform: uppercase;
+}
+
+.hero h3 {
+  color: var(--secondary);
+}
+
+.testimonials {
+  display: flex;
+  justify-content: space-between;
+}
+
+.testimonial {
+  border: var(--primary) 2px solid;
+  border-radius: 8px;
+  height: 250px;
+  margin: 20px;
+  padding: 10px;
+}
+
+footer {
+  background-color: #2a3934;
   height: 180px;
   align-items: center;
   display: flex;
