@@ -5,7 +5,7 @@ export default function Nav() {
     return (
         <nav>
             <ul>
-                <img src='' alt='logo'></img>
+                <img src={'/Images/Logo.jpg'} alt='logo' width={100}></img>
                 <li><a href='TEST'>HOME</a></li>
                 <li><a href='TEST'>ABOUT</a></li>
                 <li><a href='TEST'>MENU</a></li>
