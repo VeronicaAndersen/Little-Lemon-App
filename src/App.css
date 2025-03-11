@@ -3,6 +3,8 @@
 :root {
   --primary: #495E57;
   --secondary: #F4CE14;
+  /* --box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+  --boxShadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 p, .paragraph{
@@ -103,6 +105,7 @@ button {
   justify-content: space-around;
   background-color: #2a3934;
   padding: 20px;
+  box-shadow: var(--boxShadow);
 }
 
 .hero, .about {
@@ -111,6 +114,7 @@ button {
   border-radius: 16px;
   margin: 20px 100px;
   padding: 20px;
+  box-shadow: var(--boxShadow);
 }
 
 .hero h1 {
@@ -132,6 +136,7 @@ button {
   height: 250px;
   margin: 20px;
   padding: 10px;
+  box-shadow: var(--boxShadow);
 }
 
 footer {
