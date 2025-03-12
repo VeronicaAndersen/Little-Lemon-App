@@ -3,7 +3,6 @@
 :root {
   --primary: #495E57;
   --secondary: #F4CE14;
-  /* --box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
   --boxShadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
@@ -137,6 +136,15 @@ button {
   margin: 20px;
   padding: 10px;
   box-shadow: var(--boxShadow);
+}
+.in-progress{
+  height: 40vh;
+  width: 500px;
+  border: var(--primary) 2px solid;
+  box-shadow: var(--boxShadow);
+  margin: auto auto;
+  border-radius: 16px;
+  padding: 10px;
 }
 
 footer {
