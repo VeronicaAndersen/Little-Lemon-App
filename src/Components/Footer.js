@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Footer() {
     return (
         <footer>
-            <img src={'/Images/Logo.jpg'} alt='images' width={"300px"}></img>
+            <Link to="/"><img src={'/Images/Logo.jpg'} alt='images' width={"300px"}></img></Link>
             <ul>
                 <li><Link to="/">HOME</Link></li>
                 <li><Link to="/about">ABOUT</Link></li>

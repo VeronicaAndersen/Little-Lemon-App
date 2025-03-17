@@ -6,7 +6,7 @@ export default function Nav() {
     return (
         <nav>
             <ul>
-                <img src={'/Images/Logo.jpg'} alt='logo' width={100}></img>
+            <Link to="/"><img src={'/Images/Logo.jpg'} alt='logo' width={100}></img></Link>
                 <li><Link to="/">HOME</Link></li>
                 <li><Link to="/about">ABOUT</Link></li>
                 <li><Link to="/menu">MENU</Link></li>
