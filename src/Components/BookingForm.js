@@ -68,7 +68,7 @@ export default function BookingPage({ availableTimes, dispatch }) {
       <input type="date" id="res-date" name="date" value={formData.date} onChange={handleChange} required />
 
       <label htmlFor="res-time">Choose time</label>
-      <select id="res-time" name="time" value={formData.time} onChange={handleChange} disabled={!formData.date}>
+      <select id="res-time" name="time" value={formData.time} onChange={handleChange} disabled={!formData.date} aria-disabled={!formData.date}>
         {timesForSelectedDate.length > 0 ? (
           timesForSelectedDate.map((time) => (
             <option key={time} value={time}>
@@ -76,7 +76,9 @@ export default function BookingPage({ availableTimes, dispatch }) {
             </option>
           ))
         ) : (
-          <option>No available times</option>
+          <p aria-live="polite">
+            {timesForSelectedDate.length === 0 ? "No available times for this date." : ""}
+          </p>
         )}
       </select>
 
