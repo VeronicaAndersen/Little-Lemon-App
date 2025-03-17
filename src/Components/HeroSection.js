@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function HeroSection() {
     const navigate = useNavigate();
+
     return (
         <article className='hero'>
             <section>
@@ -12,7 +13,7 @@ export default function HeroSection() {
                 <button onClick={() => navigate("/reservations")}>Reserve a table</button>
             </section>
             <section>
-                <img src='./Images/Bread.jpg' alt='Little Lemon' width={"200px"}/>
+                <img src='./Images/Bread.jpg' alt='Little Lemon' width={"200px"} />
             </section>
         </article>
     )

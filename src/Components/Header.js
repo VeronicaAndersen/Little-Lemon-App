@@ -1,9 +1,9 @@
 import React from 'react'
-
+import Nav from './Nav'
 export default function Header() {
     return (
         <header>
-            <img src={"/Images/Banner.jpg"} alt='banner'/>
+            <Nav/>
         </header>
     )
 }
