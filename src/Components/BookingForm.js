@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-export default function BookingPage({ availableTimes, dispatch }) {
+export default function BookingForm({ availableTimes, dispatch }) {
   // Form state
   const [formData, setFormData] = useState({
     firstName: "",
@@ -76,11 +76,12 @@ export default function BookingPage({ availableTimes, dispatch }) {
             </option>
           ))
         ) : (
-          <p aria-live="polite">
-            {timesForSelectedDate.length === 0 ? "No available times for this date." : ""}
-          </p>
+          <option disabled>No available times</option>
         )}
       </select>
+      {timesForSelectedDate.length === 0 && formData.date && (
+        <p aria-live="polite">No available times for this date.</p>
+      )}
 
       <label htmlFor="guests">Number of guests</label>
       <input type="number" id="guests" name="guests" min="1" max="10" value={formData.guests} onChange={handleChange} required />
