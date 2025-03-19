@@ -30,7 +30,16 @@ export default function BookingForm({ availableTimes, dispatch }) {
     <>
       <label htmlFor={name}>{label}</label>
       {options ? (
-        <select id={name} name={name} value={formData[name]} onChange={handleChange} {...extraProps}>
+        <select
+          id={name}
+          name={name}
+          value={formData[name]}
+          onChange={handleChange}
+          aria-required="true"
+          aria-invalid={errors[name] ? "true" : "false"}
+          aria-describedby={`${name}-error`}
+          {...extraProps}
+        >
           {options.map((option) => (
             <option key={option} value={option}>
               {option}
@@ -38,9 +47,19 @@ export default function BookingForm({ availableTimes, dispatch }) {
           ))}
         </select>
       ) : (
-        <input id={name} name={name} type={type} value={formData[name]} onChange={handleChange} {...extraProps} />
+        <input
+          id={name}
+          name={name}
+          type={type}
+          value={formData[name]}
+          onChange={handleChange}
+          aria-required="true"
+          aria-invalid={errors[name] ? "true" : "false"}
+          aria-describedby={`${name}-error`}
+          {...extraProps}
+        />
       )}
-      {errors[name] && <p className="error">{errors[name]}</p>}
+      {errors[name] && <p id={`${name}-error`} className="error" role="alert">{errors[name]}</p>}
     </>
   );
 
@@ -64,21 +83,15 @@ export default function BookingForm({ availableTimes, dispatch }) {
   };
 
   const handleChange = (e) => {
-    setFormData((prev) => {
-      const newFormData = {
-        ...prev,
-        [e.target.name]: e.target.value,
-      };
-
-      return newFormData;
-    });
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleNext = (e) => {
-
     e.preventDefault();
     if (!validateStep1()) return;
-
     setStep(step + 1);
   };
 
@@ -89,7 +102,6 @@ export default function BookingForm({ availableTimes, dispatch }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateStep2()) return;
-
     if (!formData.firstName || !formData.lastName || !formData.phoneNumber || !formData.email) {
       alert("Please fill in all customer information!");
       return;
@@ -119,12 +131,11 @@ export default function BookingForm({ availableTimes, dispatch }) {
     navigate('/confirmation', { state: { info: formData } });
   };
 
-
   const progress = (step / 2) * 100;
 
   return (
     <div className="form">
-      <div className="progressbar">
+      <div className="progressbar" role="progressbar" aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100">
         <div className="progress" style={{ width: `${progress}%` }}></div>
       </div>
 
@@ -137,7 +148,15 @@ export default function BookingForm({ availableTimes, dispatch }) {
               <h2>Select Date and Time</h2>
               {renderInput("Choose Date", "date", "date", null, { required: true })}
               <label htmlFor="res-time">Choose Time</label>
-              <select id="res-time" name="time" value={formData.time} onChange={handleChange} disabled={!formData.date}>
+              <select
+                id="res-time"
+                name="time"
+                value={formData.time}
+                onChange={handleChange}
+                disabled={!formData.date}
+                aria-required="true"
+                aria-invalid={errors.time ? "true" : "false"}
+              >
                 <option value="" disabled>Select Time</option>
                 {timesForSelectedDate.length > 0 ? (
                   timesForSelectedDate.map((time) => (
@@ -151,13 +170,13 @@ export default function BookingForm({ availableTimes, dispatch }) {
               </select>
 
               {timesForSelectedDate.length === 0 && formData.date && (
-                <p aria-live="polite">No available times for this date.</p>
+                <p aria-live="polite" role="status">No available times for this date.</p>
               )}
               {renderInput("Number of Guests", "guests", "number", null, { min: 1, max: 10, required: true })}
               {renderInput("Occasion", "occasion", "select", ["Birthday", "Anniversary"])}
 
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <button type="submit" disabled={!formData.date || timesForSelectedDate.length === 0}>
+                <button type="submit" disabled={!formData.date || timesForSelectedDate.length === 0} aria-label="Proceed to the next step">
                   Next
                 </button>
               </div>
@@ -171,10 +190,12 @@ export default function BookingForm({ availableTimes, dispatch }) {
               {renderInput("Email", "email", "email", null, { required: true })}
 
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <button className="back-button" type="button" onClick={handleBack}>
+                <button className="back-button" type="button" onClick={handleBack} aria-label="Go back to the previous step">
                   Back
                 </button>
-                <button type="submit">Make Your Reservation</button>
+                <button type="submit" aria-label="Submit the reservation">
+                  Make Your Reservation
+                </button>
               </div>
             </form>
           )}
