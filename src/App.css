@@ -169,6 +169,80 @@ button:disabled:hover {
 .booking-page h1{
   text-align: center;
 }
+.table-form{
+  display: flex;
+}
+.form{
+  display: block;
+  margin-left: 30px;
+}
+
+.progressbar{
+  width: 100%;
+  background-color: #e0e0e0;
+  height: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.progress{
+  height: 100%;
+  background-color: var(--secondary);
+  border-radius: 5px;
+}
+
+.table-container {
+  margin-top: 20px;
+  padding: 10px;
+  max-width: 300px;
+  margin: 20px auto;
+  border-radius: 8px;
+  border: var(--primary) 2px solid;
+  box-shadow: var(--boxShadow);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+th {
+  background-color: var(--primary);
+  color: white;
+  padding: 10px 15px;
+  text-align: left;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+td {
+  background-color: #f2f2f2;
+  padding: 8px 15px;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid #ddd;
+}
+
+
+@media (max-width: 768px) {
+  table {
+    width: 100%;
+    font-size: 12px;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+
+  .table-container {
+    padding: 5px;
+  }
+}
+
+td, th {
+  text-align: center;
+}
 
 input, select{
   height: 30px;

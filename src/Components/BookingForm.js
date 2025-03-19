@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 export default function BookingForm({ availableTimes, dispatch }) {
   const [formData, setFormData] = useState({
@@ -7,51 +7,14 @@ export default function BookingForm({ availableTimes, dispatch }) {
     phoneNumber: "",
     email: "",
     date: "",
-    time: "17:00",
+    time: "",
     guests: 1,
     occasion: "Birthday",
   });
+  const [step, setStep] = useState(1); // Manage the step (1: Date/Time, 2: Customer Info)
 
-  // Load available times when date changes
-  useEffect(() => {
-    if (formData.date && !availableTimes[formData.date]) {
-      dispatch({
-        type: "SET_TIMES",
-        payload: {
-          date: formData.date,
-          times: ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"],
-        },
-      });
-    }
-  }, [formData.date, availableTimes, dispatch]);
-
-  // Handle input change
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!formData.date) {
-      alert("Please select a date!");
-      return;
-    }
-
-    dispatch({ type: "REMOVE_TIME", payload: { date: formData.date, time: formData.time } });
-
-    console.log("Reservation submitted:", formData);
-    alert("Reservation submitted successfully!");
-  };
-
-  // Get available times for the selected date (fallback to empty array)
   const timesForSelectedDate = availableTimes[formData.date] || [];
 
-  // Reusable input rendering function
   const renderInput = (label, name, type = "text", options = null, extraProps = {}) => (
     <>
       <label htmlFor={name}>{label}</label>
@@ -69,36 +32,126 @@ export default function BookingForm({ availableTimes, dispatch }) {
     </>
   );
 
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    if (step === 1 && !formData.date) {
+      alert("Please select a date!");
+      return;
+    }
+    if (step === 1 && timesForSelectedDate.length === 0) {
+      alert("Please choose an available time.");
+      return;
+    }
+    setStep(step + 1); // Move to next step
+  };
+
+  const handleBack = () => {
+    setStep(step - 1); // Go back to the previous step
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!formData.firstName || !formData.lastName || !formData.phoneNumber || !formData.email) {
+      alert("Please fill in all customer information!");
+      return;
+    }
+
+    // Your form submission logic goes here (API call, etc.)
+    alert("Reservation submitted successfully!");
+
+    // Remove the reserved time slot from availableTimes
+    const updatedAvailableTimes = { ...availableTimes };
+    const selectedDate = formData.date;
+    const selectedTime = formData.time;
+
+    // Remove the time from the availableTimes state
+    if (updatedAvailableTimes[selectedDate]) {
+      updatedAvailableTimes[selectedDate] = updatedAvailableTimes[selectedDate].filter(
+        (time) => time !== selectedTime
+      );
+    }
+
+    dispatch({
+      type: "REMOVE_TIME",
+      payload: { date: formData.date, time: formData.time }
+    });
+
+    // Clear the form data and reset the step
+    setFormData({
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
+      email: "",
+      date: "",
+      time: "",
+      guests: 1,
+      occasion: "Birthday",
+    });
+    setStep(1); // Reset step to the first one
+  };
+
+  // Calculate progress based on the current step
+  const progress = (step / 2) * 100;
+
   return (
-    <form onSubmit={handleSubmit} style={{ display: "grid", maxWidth: "300px", gap: "20px", margin: "20px auto" }}>
-      {renderInput("First Name", "firstName", "text", null, { required: true })}
-      {renderInput("Last Name", "lastName", "text", null, { required: true })}
-      {renderInput("Phone Number", "phoneNumber", "tel", null, { required: true, pattern: "[0-9]{10}" })}
-      {renderInput("Email", "email", "email", null, { required: true })}
-      {renderInput("Choose Date", "date", "date", null, { required: true })}
-      {renderInput("Number of Guests", "guests", "number", null, { min: 1, max: 10, required: true })}
-      {renderInput("Occasion", "occasion", "select", ["Birthday", "Anniversary"])}
+    <div className="form">
+      <div className="progressbar">
+        <div className="progress" style={{ width: `${progress}%` }}></div>
+      </div>
 
-      <label htmlFor="res-time">Choose Time</label>
-      <select id="res-time" name="time" value={formData.time} onChange={handleChange} disabled={!formData.date}>
-        {timesForSelectedDate.length > 0 ? (
-          timesForSelectedDate.map((time) => (
-            <option key={time} value={time}>
-              {time}
-            </option>
-          ))
-        ) : (
-          <option disabled>No available times</option>
-        )}
-      </select>
+      {step === 1 ? (
+        <form onSubmit={handleNext} style={{ display: "grid", maxWidth: "300px", gap: "20px", margin: "20px auto" }}>
+          <h2>Select Date and Time</h2>
+          {renderInput("Choose Date", "date", "date", null, { required: true })}
+          <label htmlFor="res-time">Choose Time</label>
+          <select id="res-time" name="time" value={formData.time} onChange={handleChange} disabled={!formData.date}>
+            <option value="" disabled>Select Time</option>
+            {timesForSelectedDate.length > 0 ? (
+              timesForSelectedDate.map((time) => (
+                <option key={time} value={time}>
+                  {time}
+                </option>
+              ))
+            ) : (
+              <option disabled>No available times</option>
+            )}
+          </select>
 
-      {timesForSelectedDate.length === 0 && formData.date && (
-        <p aria-live="polite">No available times for this date.</p>
+          {timesForSelectedDate.length === 0 && formData.date && (
+            <p aria-live="polite">No available times for this date.</p>
+          )}
+          {renderInput("Number of Guests", "guests", "number", null, { min: 1, max: 10, required: true })}
+          {renderInput("Occasion", "occasion", "select", ["Birthday", "Anniversary"])}
+
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <button type="submit" disabled={!formData.date || timesForSelectedDate.length === 0}>
+              Next
+            </button>
+          </div>
+        </form>
+      ) : (
+        <form onSubmit={handleSubmit} style={{ display: "grid", maxWidth: "300px", gap: "20px", margin: "20px auto" }}>
+          <h2>Customer Information</h2>
+          {renderInput("First Name", "firstName", "text", null, { required: true })}
+          {renderInput("Last Name", "lastName", "text", null, { required: true })}
+          {renderInput("Phone Number", "phoneNumber", "tel", null, { required: true, pattern: "[0-9]{10}" })}
+          {renderInput("Email", "email", "email", null, { required: true })}
+
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <button type="button" onClick={handleBack}>
+              Back
+            </button>
+            <button type="submit">Make Your Reservation</button>
+          </div>
+        </form>
       )}
-
-      <button type="submit" disabled={!formData.date || timesForSelectedDate.length === 0}>
-        Make Your Reservation
-      </button>
-    </form>
+    </div>
   );
 }

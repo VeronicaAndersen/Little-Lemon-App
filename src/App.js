@@ -1,5 +1,6 @@
 import './App.css';
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
+import { fetchAllAvailableTimes } from "./API/mockAPI";
 import { Routes, Route } from "react-router-dom";
 import About from './Components/About';
 import HomePage from './Components/HomePage';
@@ -18,8 +19,7 @@ const updateTimes = (state, action) => {
   switch (action.type) {
     case "REMOVE_TIME": {
       const { date, time } = action.payload;
-      if (!state[date]) return state; // If no times exist for that date, return state unchanged
-
+      if (!state[date]) return state;
       const updatedTimes = state[date].filter((t) => t !== time);
       return {
         ...state,
@@ -35,7 +35,12 @@ const updateTimes = (state, action) => {
       };
     }
 
+    case "SET_ALL_TIMES": {
+      return { ...action.payload }; // Ensure it replaces state correctly
+    }
+
     default:
+
       return state;
   }
 };
@@ -43,6 +48,14 @@ const updateTimes = (state, action) => {
 function App() {
   const [availableTimes, dispatch] = useReducer(updateTimes, initializeTimes());
 
+  // ✅ Fetch all available times on mount
+  useEffect(() => {
+    fetchAllAvailableTimes()
+      .then((allTimes) => {
+        dispatch({ type: "SET_ALL_TIMES", payload: allTimes });
+      })
+      .catch((error) => console.error("Error fetching all times:", error));
+  }, []);
   return (
     <>
       <Header availableTimes={availableTimes} dispatch={dispatch} />
