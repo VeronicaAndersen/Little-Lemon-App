@@ -8,7 +8,7 @@ import InProgress from './Components/InProgress';
 import BookingPage from './Components/BookingPage';
 import Footer from './Components/Footer';
 import Header from './Components/Header';
-import Confirmation from './Components/Confirmation';
+import ConfirmedBooking from './Components/ConfirmedBooking';
 
 const initializeTimes = () => {
   return {};
@@ -58,7 +58,7 @@ function App() {
         <Route path="/reservations" element={<BookingPage availableTimes={availableTimes} dispatch={dispatch} />}></Route>
         <Route path="/orderOnline" element={<InProgress />}></Route>
         <Route path="/login" element={<InProgress />}></Route>
-        <Route path="/confirmation" element={<Confirmation />}></Route>
+        <Route path="/confirmation" element={<ConfirmedBooking />}></Route>
       </Routes>
 
       <Footer />

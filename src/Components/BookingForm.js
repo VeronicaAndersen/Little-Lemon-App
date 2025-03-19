@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Confirmation from "./Confirmation";
+import ConfirmedBooking from "./ConfirmedBooking";
 import { useNavigate } from 'react-router-dom';
 
 export default function BookingForm({ availableTimes, dispatch }) {
@@ -78,6 +78,11 @@ export default function BookingForm({ availableTimes, dispatch }) {
         (time) => time !== selectedTime
       );
     }
+    const existingBookings = JSON.parse(localStorage.getItem("bookings")) || [];
+
+    const updatedBookings = [...existingBookings, formData];
+
+  localStorage.setItem("bookings", JSON.stringify(updatedBookings));
 
     dispatch({
       type: "REMOVE_TIME",
@@ -97,7 +102,7 @@ export default function BookingForm({ availableTimes, dispatch }) {
       </div>
 
       {submitted ? (
-        <Confirmation info={formData} />
+        <ConfirmedBooking info={formData} />
       ) : (
         <>
           {step === 1 ? (
