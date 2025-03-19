@@ -2,6 +2,7 @@ import React from 'react'
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
+import './Styling/Testimonials.css'
 
 const labels = {
     0.5: 'Useless',
@@ -15,6 +16,7 @@ const labels = {
     4.5: 'Excellent',
     5: 'Excellent+',
 };
+
 export default function Testimonials() {
 
     return (
@@ -26,48 +28,48 @@ export default function Testimonials() {
                     <img src={"/Images/Pasta.jpg"} alt="userpic" width={"150px"} />
                     <Rating
                         name="text-feedback"
-                        value="5"
+                        value={5}
                         readOnly
                         precision={0.5}
                         emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
                     />
-                    <Box sx={{ ml: 2 }} className="paragraph">{labels["5"]}</Box>
+                    <Box sx={{ ml: 2 }} className="paragraph">{labels[5]}</Box>
                 </Box>
                 <Box className="testimonial">
                     <h3 className="card-title">Rating</h3>
                     <img src={"/Images/Pasta.jpg"} alt="userpic" width={"150px"} />
                     <Rating
                         name="text-feedback"
-                        value="3.5"
+                        value={3.5}
                         readOnly
                         precision={0.5}
                         emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
                     />
-                    <Box sx={{ ml: 2 }} className="paragraph">{labels["3.5"]}</Box>
+                    <Box sx={{ ml: 2 }} className="paragraph">{labels[3.5]}</Box>
                 </Box>
                 <Box className="testimonial">
                     <h3 className="card-title">Rating</h3>
                     <img src={"/Images/Pasta.jpg"} alt="userpic" width={"150px"} />
                     <Rating
                         name="text-feedback"
-                        value="4"
+                        value={4}
                         readOnly
                         precision={0.5}
                         emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
                     />
-                    <Box sx={{ ml: 2 }} className="paragraph">{labels["4"]}</Box>
+                    <Box sx={{ ml: 2 }} className="paragraph">{labels[4]}</Box>
                 </Box>
                 <Box className="testimonial">
                     <h3 className="card-title">Rating</h3>
                     <img src={"/Images/Pasta.jpg"} alt="userpic" width={"150px"} />
                     <Rating
                         name="text-feedback"
-                        value="4.5"
+                        value={4.5}
                         readOnly
                         precision={0.5}
                         emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
                     />
-                    <Box sx={{ ml: 2 }} className="paragraph">{labels["4.5"]}</Box>
+                    <Box sx={{ ml: 2 }} className="paragraph">{labels[4.5]}</Box>
                 </Box>
             </div>
         </>

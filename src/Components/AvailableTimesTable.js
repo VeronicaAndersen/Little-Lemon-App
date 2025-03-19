@@ -1,4 +1,5 @@
 import React from 'react';
+import './Styling/AvailableTimesTable.css';  // Assuming the styles will be here
 
 export default function AvailableTimesTable({ availableTimes }) {
   return (
@@ -27,6 +28,5 @@ export default function AvailableTimesTable({ availableTimes }) {
         </tbody>
       </table>
     </div>
-
   );
 };

@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Styling/ConfirmedBooking.css";
 
 export default function ConfirmedBooking() {
     const navigate = useNavigate();
-
-    const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+    const [bookings, setBookings] = useState(JSON.parse(localStorage.getItem("bookings")) || []);
 
     if (bookings.length === 0) {
         navigate('/reservations', { replace: true });
@@ -16,9 +16,12 @@ export default function ConfirmedBooking() {
     };
 
     const handleCancelBooking = (index) => {
+        const confirmCancel = window.confirm("Are you sure you want to cancel this booking?");
+        if (!confirmCancel) return;
+
         const updatedBookings = bookings.filter((_, i) => i !== index);
+        setBookings(updatedBookings);
         localStorage.setItem("bookings", JSON.stringify(updatedBookings));
-        window.location.reload();
     };
 
     return (
@@ -27,10 +30,12 @@ export default function ConfirmedBooking() {
             {bookings.map((booking, index) => (
                 <div className="booking-details" key={index}>
                     <h2>Booking {index + 1}</h2>
-                    <ul>
+                    <ul className="booking-info">
                         {Object.entries(booking).map(([key, value]) => (
                             <li key={key}>
-                                <strong>{key.replace(/([A-Z])/g, ' $1').toUpperCase()}:</strong> {value || 'Not selected'}
+                                <strong>{key.replace(/([A-Z])/g, ' $1').toUpperCase()}:</strong>
+                                <br />
+                                {value || 'Not selected'}
                             </li>
                         ))}
                     </ul>
@@ -39,7 +44,7 @@ export default function ConfirmedBooking() {
                     </button>
                 </div>
             ))}
-            <button className="back-button" onClick={handleBackToBooking}>Back to Booking</button>
+            <button className="back-button" onClick={handleBackToBooking}>Back to Reservations</button>
         </div>
     );
 }

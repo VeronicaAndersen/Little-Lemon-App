@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ConfirmedBooking from "./ConfirmedBooking";
 import { useNavigate } from 'react-router-dom';
+import './Styling/BookingForm.css';
 
 export default function BookingForm({ availableTimes, dispatch }) {
 
@@ -144,7 +145,7 @@ export default function BookingForm({ availableTimes, dispatch }) {
       ) : (
         <>
           {step === 1 ? (
-            <form onSubmit={handleNext} style={{ display: "grid", maxWidth: "300px", gap: "20px", margin: "20px auto" }} noValidate>
+            <form onSubmit={handleNext} className="booking-form" noValidate>
               <h2>Select Date and Time</h2>
               {renderInput("Choose Date", "date", "date", null, { required: true })}
               <label htmlFor="res-time">Choose Time</label>
@@ -175,21 +176,21 @@ export default function BookingForm({ availableTimes, dispatch }) {
               {renderInput("Number of Guests", "guests", "number", null, { min: 1, max: 10, required: true })}
               {renderInput("Occasion", "occasion", "select", ["Birthday", "Anniversary"])}
 
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div className="form-actions">
                 <button type="submit" disabled={!formData.date || timesForSelectedDate.length === 0} aria-label="Proceed to the next step">
                   Next
                 </button>
               </div>
             </form>
           ) : (
-            <form onSubmit={handleSubmit} style={{ display: "grid", maxWidth: "300px", gap: "20px", margin: "20px auto" }} noValidate>
+            <form onSubmit={handleSubmit} className="booking-form" noValidate>
               <h2>Customer Information</h2>
               {renderInput("First Name", "firstName", "text", null, { required: true })}
               {renderInput("Last Name", "lastName", "text", null, { required: true })}
               {renderInput("Phone Number", "phoneNumber", "tel", null, { required: true, pattern: "[0-9]{10}" })}
               {renderInput("Email", "email", "email", null, { required: true })}
 
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div className="form-actions">
                 <button className="back-button" type="button" onClick={handleBack} aria-label="Go back to the previous step">
                   Back
                 </button>

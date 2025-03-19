@@ -5,16 +5,17 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import './Styling/Specials.css'
 
 export default function Specials() {
     return (
-        <>
-            <div className='specials'>
+        <div className="specials">
+            <div className='specials-header'>
                 <h1 className='section-title'>Specials</h1>
                 <button>Online menu</button>
             </div>
-            <div className='specials'>
-                <Card sx={{ maxWidth: 345 }}>
+            <div className='specials-cards'>
+                <Card sx={{ maxWidth: 345 }} className="special-card">
                     <CardMedia
                         sx={{ height: 140 }}
                         image="/Images/Salad.jpg"
@@ -35,7 +36,7 @@ export default function Specials() {
                         <Button size="small">Order a delivery</Button>
                     </CardActions>
                 </Card>
-                <Card sx={{ maxWidth: 345 }}>
+                <Card sx={{ maxWidth: 345 }} className="special-card">
                     <CardMedia
                         sx={{ height: 140 }}
                         image="/Images/Pasta.jpg"
@@ -56,11 +57,11 @@ export default function Specials() {
                         <Button size="small">Order a delivery</Button>
                     </CardActions>
                 </Card>
-                <Card sx={{ maxWidth: 345 }}>
+                <Card sx={{ maxWidth: 345 }} className="special-card">
                     <CardMedia
                         sx={{ height: 140 }}
                         image="/Images/Bruchata.jpg"
-                        title="green iguana"
+                        title="Bruchata"
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div" className="card-title">
@@ -78,6 +79,6 @@ export default function Specials() {
                     </CardActions>
                 </Card>
             </div>
-        </>
+        </div>
     );
 }
