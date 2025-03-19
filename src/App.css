@@ -89,6 +89,7 @@ button {
   border: none;
   cursor: pointer;
   padding: 0 10px;
+  box-shadow: var(--boxShadow);
 }
 
 button:hover {
@@ -101,6 +102,15 @@ button:disabled {
   background-color: var(--secondary);
   opacity: 0.6;
   color: inherit;
+}
+
+.back-button {
+  background-color: #d1d2d4; /* Blue color for Back */
+}
+
+.back-button:hover {
+  background-color: #b4b5b6;
+  color: #000;
 }
 
 button:disabled:hover {
@@ -249,6 +259,71 @@ input, select{
   border-radius: 8px;
   box-shadow: var(--boxShadow);
   border: var(--primary) 1px solid;
+}
+
+.confirmation-container {
+  width: 80%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: var(--boxShadow);
+  border: var(--primary) 2px solid;
+}
+
+.confirmation-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.confirmation-header h1 {
+  font-size: 2rem;
+  color: #333;
+  margin: 0;
+}
+
+.booking-details {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.booking-details h2 {
+  font-size: 1.5rem;
+  color: #444;
+  margin-bottom: 15px;
+}
+
+.booking-details ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.booking-details li {
+  font-size: 1rem;
+  margin: 8px 0;
+  color: #555;
+}
+
+.booking-details strong {
+  font-weight: bold;
+  color: #333;
+}
+
+.booking-details li:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.booking-details li:last-child {
+  padding-bottom: 0;
+}
+
+.booking-details li span {
+  color: #999;
+  font-style: italic;
 }
 
 footer {

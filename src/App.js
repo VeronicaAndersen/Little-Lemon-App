@@ -8,13 +8,12 @@ import InProgress from './Components/InProgress';
 import BookingPage from './Components/BookingPage';
 import Footer from './Components/Footer';
 import Header from './Components/Header';
+import Confirmation from './Components/Confirmation';
 
-// Function to initialize available times (Default times for all future dates)
 const initializeTimes = () => {
   return {};
 };
 
-// Reducer function to update available times based on date
 const updateTimes = (state, action) => {
   switch (action.type) {
     case "REMOVE_TIME": {
@@ -27,16 +26,8 @@ const updateTimes = (state, action) => {
       };
     }
 
-    case "SET_TIMES": {
-      const { date, times } = action.payload;
-      return {
-        ...state,
-        [date]: times,
-      };
-    }
-
     case "SET_ALL_TIMES": {
-      return { ...action.payload }; // Ensure it replaces state correctly
+      return { ...action.payload };
     }
 
     default:
@@ -48,7 +39,7 @@ const updateTimes = (state, action) => {
 function App() {
   const [availableTimes, dispatch] = useReducer(updateTimes, initializeTimes());
 
-  // ✅ Fetch all available times on mount
+
   useEffect(() => {
     fetchAllAvailableTimes()
       .then((allTimes) => {
@@ -67,6 +58,7 @@ function App() {
         <Route path="/reservations" element={<BookingPage availableTimes={availableTimes} dispatch={dispatch} />}></Route>
         <Route path="/orderOnline" element={<InProgress />}></Route>
         <Route path="/login" element={<InProgress />}></Route>
+        <Route path="/confirmation" element={<Confirmation />}></Route>
       </Routes>
 
       <Footer />

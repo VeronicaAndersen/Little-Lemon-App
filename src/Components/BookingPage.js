@@ -4,7 +4,6 @@ import AvailableTimesTable from './AvailableTimesTable';
 
 export default function BookingPage({ availableTimes, dispatch }) {
 
-
     return (
         <div className="booking-page">
             <h1 className='section-title'>Reserve a Table</h1>

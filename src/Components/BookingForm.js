@@ -1,6 +1,11 @@
 import React, { useState } from "react";
+import Confirmation from "./Confirmation";
+import { useNavigate } from 'react-router-dom';
 
 export default function BookingForm({ availableTimes, dispatch }) {
+
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -11,7 +16,8 @@ export default function BookingForm({ availableTimes, dispatch }) {
     guests: 1,
     occasion: "Birthday",
   });
-  const [step, setStep] = useState(1); // Manage the step (1: Date/Time, 2: Customer Info)
+  const [step, setStep] = useState(1);
+  const [submitted, setSubmitted] = useState(false);
 
   const timesForSelectedDate = availableTimes[formData.date] || [];
 
@@ -49,11 +55,11 @@ export default function BookingForm({ availableTimes, dispatch }) {
       alert("Please choose an available time.");
       return;
     }
-    setStep(step + 1); // Move to next step
+    setStep(step + 1);
   };
 
   const handleBack = () => {
-    setStep(step - 1); // Go back to the previous step
+    setStep(step - 1);
   };
 
   const handleSubmit = (e) => {
@@ -63,15 +69,10 @@ export default function BookingForm({ availableTimes, dispatch }) {
       return;
     }
 
-    // Your form submission logic goes here (API call, etc.)
-    alert("Reservation submitted successfully!");
-
-    // Remove the reserved time slot from availableTimes
     const updatedAvailableTimes = { ...availableTimes };
     const selectedDate = formData.date;
     const selectedTime = formData.time;
 
-    // Remove the time from the availableTimes state
     if (updatedAvailableTimes[selectedDate]) {
       updatedAvailableTimes[selectedDate] = updatedAvailableTimes[selectedDate].filter(
         (time) => time !== selectedTime
@@ -83,21 +84,10 @@ export default function BookingForm({ availableTimes, dispatch }) {
       payload: { date: formData.date, time: formData.time }
     });
 
-    // Clear the form data and reset the step
-    setFormData({
-      firstName: "",
-      lastName: "",
-      phoneNumber: "",
-      email: "",
-      date: "",
-      time: "",
-      guests: 1,
-      occasion: "Birthday",
-    });
-    setStep(1); // Reset step to the first one
+    setSubmitted(true);
+    navigate('/confirmation', { state: { info: formData } });
   };
 
-  // Calculate progress based on the current step
   const progress = (step / 2) * 100;
 
   return (
@@ -106,51 +96,57 @@ export default function BookingForm({ availableTimes, dispatch }) {
         <div className="progress" style={{ width: `${progress}%` }}></div>
       </div>
 
-      {step === 1 ? (
-        <form onSubmit={handleNext} style={{ display: "grid", maxWidth: "300px", gap: "20px", margin: "20px auto" }}>
-          <h2>Select Date and Time</h2>
-          {renderInput("Choose Date", "date", "date", null, { required: true })}
-          <label htmlFor="res-time">Choose Time</label>
-          <select id="res-time" name="time" value={formData.time} onChange={handleChange} disabled={!formData.date}>
-            <option value="" disabled>Select Time</option>
-            {timesForSelectedDate.length > 0 ? (
-              timesForSelectedDate.map((time) => (
-                <option key={time} value={time}>
-                  {time}
-                </option>
-              ))
-            ) : (
-              <option disabled>No available times</option>
-            )}
-          </select>
-
-          {timesForSelectedDate.length === 0 && formData.date && (
-            <p aria-live="polite">No available times for this date.</p>
-          )}
-          {renderInput("Number of Guests", "guests", "number", null, { min: 1, max: 10, required: true })}
-          {renderInput("Occasion", "occasion", "select", ["Birthday", "Anniversary"])}
-
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <button type="submit" disabled={!formData.date || timesForSelectedDate.length === 0}>
-              Next
-            </button>
-          </div>
-        </form>
+      {submitted ? (
+        <Confirmation info={formData} />
       ) : (
-        <form onSubmit={handleSubmit} style={{ display: "grid", maxWidth: "300px", gap: "20px", margin: "20px auto" }}>
-          <h2>Customer Information</h2>
-          {renderInput("First Name", "firstName", "text", null, { required: true })}
-          {renderInput("Last Name", "lastName", "text", null, { required: true })}
-          {renderInput("Phone Number", "phoneNumber", "tel", null, { required: true, pattern: "[0-9]{10}" })}
-          {renderInput("Email", "email", "email", null, { required: true })}
+        <>
+          {step === 1 ? (
+            <form onSubmit={handleNext} style={{ display: "grid", maxWidth: "300px", gap: "20px", margin: "20px auto" }}>
+              <h2>Select Date and Time</h2>
+              {renderInput("Choose Date", "date", "date", null, { required: true })}
+              <label htmlFor="res-time">Choose Time</label>
+              <select id="res-time" name="time" value={formData.time} onChange={handleChange} disabled={!formData.date}>
+              <option value="" disabled>Select Time</option>
+                {timesForSelectedDate.length > 0 ? (
+                  timesForSelectedDate.map((time) => (
+                    <option key={time} value={time}>
+                      {time}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>No available times</option>
+                )}
+              </select>
 
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <button type="button" onClick={handleBack}>
-              Back
-            </button>
-            <button type="submit">Make Your Reservation</button>
-          </div>
-        </form>
+              {timesForSelectedDate.length === 0 && formData.date && (
+                <p aria-live="polite">No available times for this date.</p>
+              )}
+              {renderInput("Number of Guests", "guests", "number", null, { min: 1, max: 10, required: true })}
+              {renderInput("Occasion", "occasion", "select", ["Birthday", "Anniversary"])}
+
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <button type="submit" disabled={!formData.date || timesForSelectedDate.length === 0}>
+                  Next
+                </button>
+              </div>
+            </form>
+          ) : (
+            <form onSubmit={handleSubmit} style={{ display: "grid", maxWidth: "300px", gap: "20px", margin: "20px auto" }}>
+              <h2>Customer Information</h2>
+              {renderInput("First Name", "firstName", "text", null, { required: true })}
+              {renderInput("Last Name", "lastName", "text", null, { required: true })}
+              {renderInput("Phone Number", "phoneNumber", "tel", null, { required: true, pattern: "[0-9]{10}" })}
+              {renderInput("Email", "email", "email", null, { required: true })}
+
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <button className="back-button" type="button" onClick={handleBack}>
+                  Back
+                </button>
+                <button type="submit">Make Your Reservation</button>
+              </div>
+            </form>
+          )}
+        </>
       )}
     </div>
   );
