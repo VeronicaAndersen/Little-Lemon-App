@@ -334,3 +334,9 @@ footer {
   justify-content: space-around;
   margin-top: 20px;
 }
+
+.error {
+  color: red !important;
+  font-size: 0.9rem !important;
+  margin-top: 5px !important;
+}

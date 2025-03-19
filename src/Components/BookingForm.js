@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ConfirmedBooking from "./ConfirmedBooking";
 import { useNavigate } from 'react-router-dom';
 
@@ -18,6 +18,11 @@ export default function BookingForm({ availableTimes, dispatch }) {
   });
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
 
   const timesForSelectedDate = availableTimes[formData.date] || [];
 
@@ -35,26 +40,45 @@ export default function BookingForm({ availableTimes, dispatch }) {
       ) : (
         <input id={name} name={name} type={type} value={formData[name]} onChange={handleChange} {...extraProps} />
       )}
+      {errors[name] && <p className="error">{errors[name]}</p>}
     </>
   );
 
+  const validateStep1 = () => {
+    const newErrors = {};
+    if (!formData.date) newErrors.date = "* Please select a date.";
+    if (!formData.time) newErrors.time = "* Please select a time.";
+    if (!formData.guests || formData.guests < 1 || formData.guests > 10) newErrors.guests = "* Guests must be between 1 and 10.";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validateStep2 = () => {
+    const newErrors = {};
+    if (!formData.firstName.trim()) newErrors.firstName = "* First name is required.";
+    if (!formData.lastName.trim()) newErrors.lastName = "* Last name is required.";
+    if (!/^\d{10}$/.test(formData.phoneNumber)) newErrors.phoneNumber = "* Phone number must be 10 digits.";
+    if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "* Enter a valid email.";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    setFormData((prev) => {
+      const newFormData = {
+        ...prev,
+        [e.target.name]: e.target.value,
+      };
+
+      return newFormData;
+    });
   };
 
   const handleNext = (e) => {
+
     e.preventDefault();
-    if (step === 1 && !formData.date) {
-      alert("Please select a date!");
-      return;
-    }
-    if (step === 1 && timesForSelectedDate.length === 0) {
-      alert("Please choose an available time.");
-      return;
-    }
+    if (!validateStep1()) return;
+
     setStep(step + 1);
   };
 
@@ -64,6 +88,8 @@ export default function BookingForm({ availableTimes, dispatch }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!validateStep2()) return;
+
     if (!formData.firstName || !formData.lastName || !formData.phoneNumber || !formData.email) {
       alert("Please fill in all customer information!");
       return;
@@ -82,7 +108,7 @@ export default function BookingForm({ availableTimes, dispatch }) {
 
     const updatedBookings = [...existingBookings, formData];
 
-  localStorage.setItem("bookings", JSON.stringify(updatedBookings));
+    localStorage.setItem("bookings", JSON.stringify(updatedBookings));
 
     dispatch({
       type: "REMOVE_TIME",
@@ -92,6 +118,7 @@ export default function BookingForm({ availableTimes, dispatch }) {
     setSubmitted(true);
     navigate('/confirmation', { state: { info: formData } });
   };
+
 
   const progress = (step / 2) * 100;
 
@@ -106,12 +133,12 @@ export default function BookingForm({ availableTimes, dispatch }) {
       ) : (
         <>
           {step === 1 ? (
-            <form onSubmit={handleNext} style={{ display: "grid", maxWidth: "300px", gap: "20px", margin: "20px auto" }}>
+            <form onSubmit={handleNext} style={{ display: "grid", maxWidth: "300px", gap: "20px", margin: "20px auto" }} noValidate>
               <h2>Select Date and Time</h2>
               {renderInput("Choose Date", "date", "date", null, { required: true })}
               <label htmlFor="res-time">Choose Time</label>
               <select id="res-time" name="time" value={formData.time} onChange={handleChange} disabled={!formData.date}>
-              <option value="" disabled>Select Time</option>
+                <option value="" disabled>Select Time</option>
                 {timesForSelectedDate.length > 0 ? (
                   timesForSelectedDate.map((time) => (
                     <option key={time} value={time}>
@@ -136,7 +163,7 @@ export default function BookingForm({ availableTimes, dispatch }) {
               </div>
             </form>
           ) : (
-            <form onSubmit={handleSubmit} style={{ display: "grid", maxWidth: "300px", gap: "20px", margin: "20px auto" }}>
+            <form onSubmit={handleSubmit} style={{ display: "grid", maxWidth: "300px", gap: "20px", margin: "20px auto" }} noValidate>
               <h2>Customer Information</h2>
               {renderInput("First Name", "firstName", "text", null, { required: true })}
               {renderInput("Last Name", "lastName", "text", null, { required: true })}
